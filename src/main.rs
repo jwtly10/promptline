@@ -161,7 +161,7 @@ fn get_hostname() -> Result<String, HostnameError> {
     //     .map_err(HostnameError::GetHostnameString)?;
 
     // Set a custom hostname
-    let res = "jwtly10";
+    let res = "mbp";
 
     let res = DecoratedString::new(res.to_string())
         .colored(Color::Green)
@@ -580,13 +580,12 @@ fn main() {
         get_user().map_err(MainError::User),
         get_hostname().map_err(MainError::Hostname),
         Ok(get_cwd()),
-        // Removing this as i switch between fish and zsh
-        // get_shell().map_err(MainError::Shell),
+        get_shell().map_err(MainError::Shell),
         get_status().map_err(MainError::Status),
         get_mercurial_info().map_err(MainError::Mercurial),
         get_git_info().map_err(MainError::Git),
         get_conda_info().map_err(MainError::Conda),
-        show_nix_shell().map_err(MainError::NixShell),
+        // show_nix_shell().map_err(MainError::NixShell),
     ]
     .into_iter()
     .partition(Result::is_ok);
