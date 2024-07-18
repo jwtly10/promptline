@@ -154,11 +154,14 @@ impl Error for HostnameError {
 }
 
 fn get_hostname() -> Result<String, HostnameError> {
-    let mut buf = [0u8; 64];
-    let res = nix::unistd::gethostname(&mut buf)
-        .map_err(HostnameError::GetHostname)?
-        .to_str()
-        .map_err(HostnameError::GetHostnameString)?;
+    // let mut buf = [0u8; 64];
+    // let res = nix::unistd::gethostname(&mut buf)
+    //     .map_err(HostnameError::GetHostname)?
+    //     .to_str()
+    //     .map_err(HostnameError::GetHostnameString)?;
+
+    // Set a custom hostname
+    let res = "jwtly10";
 
     let res = DecoratedString::new(res.to_string())
         .colored(Color::Green)
@@ -577,7 +580,8 @@ fn main() {
         get_user().map_err(MainError::User),
         get_hostname().map_err(MainError::Hostname),
         Ok(get_cwd()),
-        get_shell().map_err(MainError::Shell),
+        // Removing this as i switch between fish and zsh
+        // get_shell().map_err(MainError::Shell),
         get_status().map_err(MainError::Status),
         get_mercurial_info().map_err(MainError::Mercurial),
         get_git_info().map_err(MainError::Git),
